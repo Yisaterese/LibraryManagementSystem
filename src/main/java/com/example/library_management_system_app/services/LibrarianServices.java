@@ -1,7 +1,8 @@
 package com.example.library_management_system_app.services;
 
-import org.springframework.stereotype.Service;
+import com.example.library_management_system_app.dto.UserRegisterRequest;
+import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 
-@Service
 public interface LibrarianServices {
+    RegisterResponse registerLibrarian(UserRegisterRequest registerRequest);
 }

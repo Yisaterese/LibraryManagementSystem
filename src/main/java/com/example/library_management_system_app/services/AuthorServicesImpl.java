@@ -1,4 +1,3 @@
 package com.example.library_management_system_app.services;
-
-public class BookServicesImpl implements BookServices{
+public class AuthorServicesImpl implements AuthorServices{
 }

@@ -8,12 +8,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+import java.time.Month;
+
 @SpringBootTest
 class LibraryServiceTest {
     @Autowired
     private LibraryServices libraryServicesImpl;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    public BookServices bookServices;
+    @Autowired
+    private LibrarianServices librarianServices;
 
     @AfterEach
     public void cleanUp(){
@@ -28,7 +35,6 @@ class LibraryServiceTest {
         libraryServicesImpl.registerUser(registerRequest);
         Assertions.assertEquals(1,libraryServicesImpl.getNumberOfUsers());
     }
-
     @Test
     public void registerTwoUsers_numberOfUsersIsTwoTest(){
         UserRegisterRequest registerRequest = new UserRegisterRequest();
@@ -44,9 +50,8 @@ class LibraryServiceTest {
         libraryServicesImpl.registerUser(registerRequest);
         Assertions.assertEquals(2,libraryServicesImpl.getNumberOfUsers());
     }
-
     @Test
-    public void registerTwoUsers_deleteOneTest(){
+    public void registerTwoUsers_deleteOneTest() {
         UserRegisterRequest registerRequest = new UserRegisterRequest();
         Assertions.assertEquals(0,libraryServicesImpl.getNumberOfUsers());
         registerRequest.setUsername("username");
@@ -64,7 +69,16 @@ class LibraryServiceTest {
         libraryServicesImpl.removeUserBy(registerRequest.getUsername());
         Assertions.assertEquals(1,libraryServicesImpl.getNumberOfUsers());
     }
+    @Test
+    public void registerLibrarianTest(){
+        UserRegisterRequest registerRequest = new UserRegisterRequest();
+        registerRequest.setUsername("librarian");
+        registerRequest.setPassword("password");
+        registerRequest.setEmail("librarian@gmail.com");
+        registerRequest.setDateOfBirth(LocalDate.of(2000, Month.DECEMBER,3));
+        librarianServices.registerLibrarian(registerRequest);
 
+    }
 
 
 }
