@@ -1,5 +1,6 @@
 package com.example.library_management_system_app.services;
 
+import com.example.library_management_system_app.data.repository.LibrarianRepository;
 import com.example.library_management_system_app.data.repository.UserRepository;
 import com.example.library_management_system_app.dto.UserRegisterRequest;
 import org.junit.jupiter.api.AfterEach;
@@ -7,9 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDate;
-import java.time.Month;
 
 @SpringBootTest
 class LibraryServiceTest {
@@ -21,10 +19,13 @@ class LibraryServiceTest {
     public BookServices bookServices;
     @Autowired
     private LibrarianServices librarianServices;
+    @Autowired
+    private LibrarianRepository librarianRepository;
 
     @AfterEach
     public void cleanUp(){
         userRepository.deleteAll();
+        librarianRepository.deleteAll();
     }
     @Test
     public void registerUserTest(){
@@ -72,13 +73,35 @@ class LibraryServiceTest {
     @Test
     public void registerLibrarianTest(){
         UserRegisterRequest registerRequest = new UserRegisterRequest();
+        Assertions.assertEquals(0,libraryServicesImpl.getNumberOfUsers());
         registerRequest.setUsername("librarian");
         registerRequest.setPassword("password");
         registerRequest.setEmail("librarian@gmail.com");
-        registerRequest.setDateOfBirth(LocalDate.of(2000, Month.DECEMBER,3));
         librarianServices.registerLibrarian(registerRequest);
+        Assertions.assertEquals(1,librarianServices.getNumberOfUsers());
 
     }
+    @Test
+    public void registerTwoLibrarian_removeOneTest(){
+        UserRegisterRequest registerRequest = new UserRegisterRequest();
+        Assertions.assertEquals(0,libraryServicesImpl.getNumberOfUsers());
+        registerRequest.setUsername("librarian");
+        registerRequest.setPassword("password");
+        registerRequest.setEmail("librarian@gmail.com");
+        librarianServices.registerLibrarian(registerRequest);
+        Assertions.assertEquals(1,librarianServices.getNumberOfUsers());
 
+
+        registerRequest.setUsername("librarian");
+        registerRequest.setPassword("password");
+        registerRequest.setEmail("librarian@gmail.com");
+        librarianServices.registerLibrarian(registerRequest);
+        Assertions.assertEquals(2,librarianServices.getNumberOfUsers());
+        libraryServicesImpl.deleteByUsername(registerRequest.getUsername());
+        Assertions.assertEquals(1,librarianServices.getNumberOfUsers());
+        librarianRepository.deleteAll();
+
+
+    }
 
 }

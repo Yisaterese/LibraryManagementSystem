@@ -2,19 +2,17 @@ package com.example.library_management_system_app.controller;
 
 import com.example.library_management_system_app.data.model.User;
 import com.example.library_management_system_app.dto.utility.Response.ApiResponse;
-import ExistingUserException.ExistingUserException;
+import com.example.library_management_system_app.controller.ExistingUserException.ExistingUserException;
 import com.example.library_management_system_app.dto.UserRegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import com.example.library_management_system_app.exception.UserNotFoundException;
 import com.example.library_management_system_app.services.LibraryServices;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping(path = "api/v1/user")
 public class LibraryController {

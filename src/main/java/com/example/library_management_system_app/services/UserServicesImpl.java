@@ -5,20 +5,20 @@ import com.example.library_management_system_app.data.repository.UserRepository;
 import com.example.library_management_system_app.dto.UserRegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import com.example.library_management_system_app.exception.UserNotFoundException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static com.example.library_management_system_app.dto.utility.Mapper.mapRegisterUser;
 
-@RequiredArgsConstructor
 @Service
 public class UserServicesImpl implements UserServices {
+    @Autowired
     private UserRepository userRepository;
     @Override
-    public Long getNumberOfUsers() {
-       return (long) userRepository.findAll().size();
+    public int getNumberOfUsers() {
+       return  userRepository.findAll().size();
     }
     @Override
     public void save(User newUser) {
