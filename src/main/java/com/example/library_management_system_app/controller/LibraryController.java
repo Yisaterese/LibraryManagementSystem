@@ -20,8 +20,9 @@ public class LibraryController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRegisterRequest userRegisterRequest) {
         try {
+            apiResponse.setUsers(libraryServices.getUsers());
             libraryServices.registerUser(userRegisterRequest);
-            return new ResponseEntity<>(new ApiResponse(true, "user registration successful"), HttpStatus.OK);
+            return new ResponseEntity<>(new ApiResponse(true, apiResponse.getUsers(),"user registration successful"), HttpStatus.OK);
         } catch (ExistingUserException e) {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
@@ -35,11 +36,11 @@ public class LibraryController {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
-    @DeleteMapping("/removeUser{username}")
-    public ResponseEntity<?>removeUser(@PathVariable String username){
+    @DeleteMapping("/removeUser")
+    public ResponseEntity<?>removeUser(@RequestBody UserRegisterRequest userRegisterRequest){
         try{
             apiResponse.setUsers(libraryServices.getUsers());
-            libraryServices.removeUserBy(username);
+            libraryServices.removeUserBy(userRegisterRequest.getUsername());
             return new ResponseEntity<>(new ApiResponse(true,apiResponse.getUsers(),"user successfully removed"),HttpStatus.OK);
         }catch (UserNotFoundException e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()),  HttpStatus.BAD_REQUEST);

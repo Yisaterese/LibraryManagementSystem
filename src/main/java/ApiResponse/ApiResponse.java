@@ -23,6 +23,7 @@ public class ApiResponse {
     }
 
     public ApiResponse(boolean success,List<User> users,  String message) {
+        this.success = true;
         this.message = message;
         this.users = users;
     }

@@ -3,7 +3,6 @@ package com.example.library_management_system_app.services;
 import com.example.library_management_system_app.data.model.User;
 import com.example.library_management_system_app.data.repository.UserRepository;
 import com.example.library_management_system_app.exception.UserNotFoundException;
-import com.fasterxml.jackson.core.PrettyPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,20 +17,16 @@ public class UserServicesImpl implements UserServices {
        return (long) userRepository.findAll().size();
 //        return userRepository.count();
     }
-
     @Override
     public void save(User newUser) {
         userRepository.save(newUser);
     }
-
     @Override
     public void removeByUsername(String username) {
         User foundUser = userRepository.findByUserName(username);
         if(foundUser == null) throw new UserNotFoundException("user with username "+username+" not found");
-        userRepository.delete(foundUser);
-
+        userRepository.deleteByUserName(username);
     }
-
     @Override
     public List<User> getUser() {
         List<User> foundUsers =userRepository.findAll();
