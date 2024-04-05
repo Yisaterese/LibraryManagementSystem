@@ -1,2 +1,9 @@
-package com.example.library_management_system_app.data.repository;public interface BookRepository {
+package com.example.library_management_system_app.data.repository;
+
+import com.example.library_management_system_app.data.model.Book;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BookRepository extends MongoRepository<Book, String> {
 }
