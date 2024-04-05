@@ -2,7 +2,6 @@ package com.example.library_management_system_app.controller;
 
 import ApiResponse.ApiResponse;
 import ExistingUserException.ExistingUserException;
-import com.example.library_management_system_app.data.model.User;
 import com.example.library_management_system_app.dto.UserRegisterRequest;
 import com.example.library_management_system_app.exception.UserNotFoundException;
 import com.example.library_management_system_app.services.LibraryServices;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/user")
@@ -29,7 +26,6 @@ public class LibraryController {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
-
     @GetMapping("getUsers")
     public ResponseEntity<?> getUsers(){
         try{
@@ -39,8 +35,16 @@ public class LibraryController {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
-
-
+    @DeleteMapping("/removeUser{username}")
+    public ResponseEntity<?>removeUser(@PathVariable String username){
+        try{
+            apiResponse.setUsers(libraryServices.getUsers());
+            libraryServices.removeUserBy(username);
+            return new ResponseEntity<>(new ApiResponse(true,apiResponse.getUsers(),"user successfully removed"),HttpStatus.OK);
+        }catch (UserNotFoundException e){
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()),  HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
 }

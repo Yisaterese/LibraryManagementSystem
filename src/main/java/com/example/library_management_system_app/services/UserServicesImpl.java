@@ -27,7 +27,6 @@ public class UserServicesImpl implements UserServices {
     @Override
     public void removeByUsername(String username) {
         User foundUser = userRepository.findByUserName(username);
-        System.out.println(foundUser);
         if(foundUser == null) throw new UserNotFoundException("user with username "+username+" not found");
         userRepository.delete(foundUser);
 
