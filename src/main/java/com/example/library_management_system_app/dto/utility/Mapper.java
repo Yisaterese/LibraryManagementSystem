@@ -1,7 +1,9 @@
 package com.example.library_management_system_app.dto.utility;
 
+import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.data.model.Librarian;
 import com.example.library_management_system_app.data.model.User;
+import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 
 public class Mapper {
@@ -18,5 +20,13 @@ public class Mapper {
         registerResponse.setEmail(registerResponse.getEmail());
         registerResponse.setId(user.getId());
         return registerResponse;
+    }
+    public static AddBookResponse mapBook(Book book){
+        AddBookResponse addBookResponse = new AddBookResponse();
+        addBookResponse.setAuthor(book.getAuthor());
+        addBookResponse.setTitle(book.getTitle());
+        addBookResponse.setIsbn(book.getIsbn());
+        addBookResponse.setDateAddedToLibrary(book.getDateAddedToLibrary());
+        return addBookResponse;
     }
 }

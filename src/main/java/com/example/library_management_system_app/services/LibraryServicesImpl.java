@@ -32,6 +32,12 @@ public class LibraryServicesImpl implements LibraryServices{
     @Override
     public void deleteByUsername(String username) {
         librarianServices.deleteByUsername(username);
+
+    }
+
+    @Override
+    public int getNumberOfBooks() {
+        return librarianServices.getNumberOfBooks();
     }
 
 

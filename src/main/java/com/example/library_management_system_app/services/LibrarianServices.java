@@ -1,5 +1,6 @@
 package com.example.library_management_system_app.services;
 
+import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.UserRegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import org.springframework.stereotype.Service;
@@ -11,4 +12,8 @@ public interface LibrarianServices {
     int getNumberOfUsers();
 
     void deleteByUsername(String username);
+
+    void addBookToLibrary(BookRequest bookRequest);
+
+    int getNumberOfBooks();
 }

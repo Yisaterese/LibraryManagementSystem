@@ -1,14 +1,18 @@
 package com.example.library_management_system_app.services;
 
-import com.example.library_management_system_app.data.model.Book;
+import com.example.library_management_system_app.data.model.Author;
+import com.example.library_management_system_app.data.repository.BookRepository;
 import com.example.library_management_system_app.data.repository.LibrarianRepository;
 import com.example.library_management_system_app.data.repository.UserRepository;
+import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.UserRegisterRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDate;
 
 @SpringBootTest
 class LibraryServiceTest {
@@ -22,11 +26,14 @@ class LibraryServiceTest {
     private LibrarianServices librarianServices;
     @Autowired
     private LibrarianRepository librarianRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
     @AfterEach
     public void cleanUp(){
         userRepository.deleteAll();
         librarianRepository.deleteAll();
+        bookRepository.deleteAll();
     }
     @Test
     public void registerUserTest(){
@@ -106,11 +113,20 @@ class LibraryServiceTest {
     @Test
     public void addBookToLibraryTest(){
         UserRegisterRequest registerRequest = new UserRegisterRequest();
+        Author author = new Author();
         registerRequest.setUsername("librarian");
         registerRequest.setPassword("password");
         registerRequest.setEmail("librarian@gmail.com");
         librarianServices.registerLibrarian(registerRequest);
 
+        BookRequest bookRequest = new BookRequest();
+        bookRequest.setAuthor(author);
+        bookRequest.setIsbn("1234-34-1299");
+        bookRequest.setTitle("Things fall apart");
+        bookRequest.setDateAddedToLibrary(LocalDate.now());
+
+        librarianServices.addBookToLibrary(bookRequest);
+        Assertions.assertEquals(1,libraryServicesImpl.getNumberOfBooks());
 
     }
 

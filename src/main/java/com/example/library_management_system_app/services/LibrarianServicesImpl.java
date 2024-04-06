@@ -1,7 +1,9 @@
 package com.example.library_management_system_app.services;
 
+import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.data.model.Librarian;
 import com.example.library_management_system_app.data.repository.LibrarianRepository;
+import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.UserRegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import com.example.library_management_system_app.exception.UserNotFoundException;
@@ -13,9 +15,12 @@ import static com.example.library_management_system_app.dto.utility.Mapper.mapRe
 @Service
 public class LibrarianServicesImpl implements LibrarianServices {
     @Autowired
+    private BookServices bookServices;
+    @Autowired
     private  LibrarianRepository librarianRepository;
     @Autowired
     private UserServices userServices;
+
     @Override
     public RegisterResponse registerLibrarian(UserRegisterRequest registerRequest) {
         Librarian librarian = new Librarian();
@@ -34,7 +39,18 @@ public class LibrarianServicesImpl implements LibrarianServices {
     @Override
     public void deleteByUsername(String username) {
         Librarian foundLibrarian = librarianRepository.findByUsername(username);
+        System.out.println(foundLibrarian);
         if(foundLibrarian == null) throw new UserNotFoundException("user with username "+username+" not found");
         librarianRepository.deleteByUsername(username);
+    }
+
+    @Override
+    public void addBookToLibrary(BookRequest bookRequest) {
+        bookServices.addBook(bookRequest);
+    }
+
+    @Override
+    public int getNumberOfBooks() {
+        return bookServices.getNumberOfBooks();
     }
 }

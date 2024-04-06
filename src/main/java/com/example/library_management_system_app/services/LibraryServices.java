@@ -19,4 +19,5 @@ public interface LibraryServices {
 
     void deleteByUsername(String username);
 
+    int getNumberOfBooks();
 }
