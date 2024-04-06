@@ -1,5 +1,6 @@
 package com.example.library_management_system_app.services;
 
+import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.data.repository.LibrarianRepository;
 import com.example.library_management_system_app.data.repository.UserRepository;
 import com.example.library_management_system_app.dto.UserRegisterRequest;
@@ -99,7 +100,16 @@ class LibraryServiceTest {
         Assertions.assertEquals(2,librarianServices.getNumberOfUsers());
         libraryServicesImpl.deleteByUsername(registerRequest.getUsername());
         Assertions.assertEquals(1,librarianServices.getNumberOfUsers());
-        librarianRepository.deleteAll();
+
+    }
+
+    @Test
+    public void addBookToLibraryTest(){
+        UserRegisterRequest registerRequest = new UserRegisterRequest();
+        registerRequest.setUsername("librarian");
+        registerRequest.setPassword("password");
+        registerRequest.setEmail("librarian@gmail.com");
+        librarianServices.registerLibrarian(registerRequest);
 
 
     }
