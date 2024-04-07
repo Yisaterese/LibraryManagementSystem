@@ -31,7 +31,7 @@ public class LibrarianServicesImpl implements LibrarianServices {
         throw new ExistingUserException("Username taken");
     }
     @Override
-    public int getNumberOfUsers() {
+    public int getNumberOfLibrarians() {
         return librarianRepository.findAll().size();
     }
     @Override

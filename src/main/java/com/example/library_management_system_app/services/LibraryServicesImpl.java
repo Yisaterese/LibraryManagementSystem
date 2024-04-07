@@ -31,10 +31,13 @@ public class LibraryServicesImpl implements LibraryServices{
         librarianServices.deleteByUsername(username);
 
     }
-
     @Override
     public int getNumberOfBooks() {
         return librarianServices.getNumberOfBooks();
+    }
+    @Override
+    public int getNumberOfLibrarians() {
+        return librarianServices.getNumberOfLibrarians();
     }
 
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public interface LibrarianServices {
     RegisterResponse registerLibrarian(RegisterRequest registerRequest);
 
-    int getNumberOfUsers();
+    int getNumberOfLibrarians();
 
     void deleteByUsername(String username);
 
