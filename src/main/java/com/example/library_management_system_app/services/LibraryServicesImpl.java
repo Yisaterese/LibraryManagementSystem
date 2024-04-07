@@ -1,26 +1,23 @@
 package com.example.library_management_system_app.services;
-
 import com.example.library_management_system_app.data.model.User;
-import com.example.library_management_system_app.dto.UserRegisterRequest;
+import com.example.library_management_system_app.dto.RegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 @Service
 public class LibraryServicesImpl implements LibraryServices{
     @Autowired
     private UserServices userServices;
     @Autowired
-
     private LibrarianServices librarianServices;
     @Override
-    public RegisterResponse registerUser(UserRegisterRequest userRegisterRequest) {
-        return userServices.registerUser(userRegisterRequest);
+    public RegisterResponse registerUser(RegisterRequest registerRequest) {
+        return userServices.registerUser(registerRequest);
     }
     @Override
-    public  RegisterResponse registerLibrarian(UserRegisterRequest userRegisterRequest){
-       return librarianServices.registerLibrarian(userRegisterRequest);
+    public  RegisterResponse registerLibrarian(RegisterRequest registerRequest){
+       return librarianServices.registerLibrarian(registerRequest);
     }
     @Override
     public int getNumberOfUsers() {return userServices.getNumberOfUsers();}

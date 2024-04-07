@@ -1,9 +1,9 @@
 package com.example.library_management_system_app.controller;
 
 import com.example.library_management_system_app.data.model.User;
+import com.example.library_management_system_app.dto.RegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.ApiResponse;
-import com.example.library_management_system_app.controller.ExistingUserException.ExistingUserException;
-import com.example.library_management_system_app.dto.UserRegisterRequest;
+import com.example.library_management_system_app.exception.ExistingUserException.ExistingUserException;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import com.example.library_management_system_app.exception.UserNotFoundException;
 import com.example.library_management_system_app.services.LibraryServices;
@@ -20,7 +20,7 @@ public class LibraryController {
     private LibraryServices libraryServices;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserRegisterRequest userRegisterRequest) {
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest userRegisterRequest) {
         try {
             RegisterResponse response = libraryServices.registerUser(userRegisterRequest);
             return new ResponseEntity<>(new ApiResponse(true, response), HttpStatus.OK);
@@ -37,17 +37,17 @@ public class LibraryController {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
-    @DeleteMapping("/removeUser")
-    public ResponseEntity<?>removeUser(@RequestBody UserRegisterRequest userRegisterRequest){
+    @DeleteMapping("/deleteUser/{username}")
+    public ResponseEntity<?>removeUser(@PathVariable String username){
         try{
-            libraryServices.removeUserBy(userRegisterRequest.getUsername());
-            return new ResponseEntity<>(new ApiResponse(true, userRegisterRequest.getUsername()+" deleted successfully"),HttpStatus.OK);
+            libraryServices.removeUserBy(username);
+            return new ResponseEntity<>(new ApiResponse(true, username+" deleted successfully"),HttpStatus.OK);
         }catch (UserNotFoundException e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()),  HttpStatus.BAD_REQUEST);
         }
     }
     @PostMapping("/registerLibrarian")
-    public ResponseEntity<?>registerLibrarian(@RequestBody UserRegisterRequest userRegisterRequest){
+    public ResponseEntity<?>registerLibrarian(@RequestBody RegisterRequest userRegisterRequest){
         try{
             RegisterResponse response = libraryServices.registerLibrarian(userRegisterRequest);
             return new ResponseEntity<>(new ApiResponse(true,response),HttpStatus.OK);

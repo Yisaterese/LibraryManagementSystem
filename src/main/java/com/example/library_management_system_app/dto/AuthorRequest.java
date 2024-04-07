@@ -1,12 +1,10 @@
-package com.example.library_management_system_app.data.model;
+package com.example.library_management_system_app.dto;
 
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 @Data
-@Document
-public class Author {
+public class AuthorRequest {
     private String id;
     private String firstname;
     private String lastname;
