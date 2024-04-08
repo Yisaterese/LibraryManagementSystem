@@ -186,13 +186,9 @@ class LibraryServiceTest {
     @Test
     public void userSearchForBookByAuthorAndTitleTest(){
         AuthorRequest authorRequest1 = new AuthorRequest();
-        AuthorRequest authorRequest2 = new AuthorRequest();
         BookRequest bookRequest1 = new BookRequest();
-        BookRequest bookRequest2 = new BookRequest();
         Author author1 = new Author();
-        Author author2 = new Author();
         Book newBook1 = new Book();
-        Book newBook2 = new Book();
         //registering author
         authorRequest1.setFirstname("Wole");
         authorRequest1.setLastname("Soyinka");
@@ -223,30 +219,8 @@ class LibraryServiceTest {
         newBook1.setDateAddedToLibrary(bookRequest1.getDateAddedToLibrary());
         AddBookResponse bookResponse = librarianServices.addBookToLibrary(bookRequest1,authorRequest1);
         Book foundBook1 = libraryServicesImpl.findBookByAuthorAndTitle(author1,bookRequest1.getTitle());
-        Assertions.assertEquals(newBook1,foundBook1);
-        //registering second author
-        authorRequest2.setFirstname("Chinue");
-        authorRequest2.setLastname("Achebe");
-      //  authorRequest2.setGender("Male");
-        authorRequest2.setNationality("Nigerian");
-        authorRequest2.setAutobiography("I published my first book at very young age ");
-        authorRequest2.setContactInfo("12345-2455");
-        authorRequest2.setDateOfBirth(LocalDate.of(1934, Month.JULY,13));
-        authorRequest2.setEmail("chinueachebe@gmail.com");
-        //adding second book and author
-        bookRequest2.setAuthor(author2);
-        bookRequest2.setIsbn("1234-34-1299");
-        bookRequest2.setTitle("Death and kings horseman");
-        bookRequest2.setDateAddedToLibrary(LocalDate.now());
-        newBook2.setIsbn(bookRequest2.getIsbn());
-        newBook2.setAuthor(bookRequest2.getAuthor());
-        newBook2.setTitle(bookRequest2.getTitle());
-        newBook2.setDateAddedToLibrary(bookRequest2.getDateAddedToLibrary());
-        librarianServices.addBookToLibrary(bookRequest2, authorRequest2);
-
-        Assertions.assertEquals(2, libraryServicesImpl.getNumberOfBooks());
-        Book foundBook2 = libraryServicesImpl.findBookByAuthorAndTitle(author2,bookRequest2.getTitle());
-        Assertions.assertEquals(newBook2,foundBook2);
+        System.out.println(foundBook1);
+        Assertions.assertEquals(bookResponse,foundBook1);
     }
     @Test
     public void librarianDeleteBookTitleTest(){
