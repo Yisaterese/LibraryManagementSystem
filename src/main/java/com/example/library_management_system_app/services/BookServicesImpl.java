@@ -12,6 +12,7 @@ import com.example.library_management_system_app.exception.BookNotFoundException
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.example.library_management_system_app.dto.utility.Mapper.mapBook;
@@ -29,7 +30,9 @@ public class BookServicesImpl implements BookServices {
         Book book = new Book();
         book .setAuthor(foundAuthor);
         book.setTitle(bookRequest.getTitle());
-        book.setDateAddedToLibrary(bookRequest.getDateAddedToLibrary());
+        String dateAddedToLibrary = bookRequest.getDateAddedToLibrary();
+        LocalDate convertedDate = LocalDate.parse(dateAddedToLibrary);
+        book.setDateAddedToLibrary(convertedDate);
         bookRepository.save(book);
         return mapBook(book);
     }
@@ -43,8 +46,6 @@ public class BookServicesImpl implements BookServices {
         List<Book> foundBooks = bookRepository.findAll();
         System.out.println(foundBooks);
         for(Book book: foundBooks){
-
-
             if(book.getAuthor().equals(author) && book.getTitle().equalsIgnoreCase(title)){return book;}
         }
         throw new BookNotFoundException("book with author's name "+author+"and title "+title+"not found");
@@ -61,7 +62,6 @@ public class BookServicesImpl implements BookServices {
         }
         throw new BookNotFoundException("book with author's name "+authorName+"and title "+title+"not found");
     }
-
     @Override
     public void deleteBookByTitle(String title) {
         Book foundBook = bookRepository.findBookByTitle(title);
@@ -69,4 +69,8 @@ public class BookServicesImpl implements BookServices {
         bookRepository.delete(foundBook);
     }
 
+    @Override
+    public Book borrowbook(String title) {
+        return null;
+    }
 }

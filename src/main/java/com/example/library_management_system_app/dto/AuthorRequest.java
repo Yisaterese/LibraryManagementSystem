@@ -9,7 +9,7 @@ public class AuthorRequest {
     private String firstname;
     private String lastname;
     private String Autobiography;
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
     private String Gender;
     private String nationality;
     private String contactInfo;

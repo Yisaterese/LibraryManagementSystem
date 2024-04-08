@@ -59,4 +59,9 @@ public class UserServicesImpl implements UserServices {
     public Book userFindBookByAuthorAndTitle(String author, String title) {
         return bookServicesImpl.findBookByAuthorAndTitle(author,title);
     }
+
+    @Override
+    public Book borrowBook(String title) {
+        return bookServicesImpl.borrowbook(title);
+    }
 }

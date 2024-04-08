@@ -10,5 +10,5 @@ public class BookRequest {
     private Author author;
     private String isbn;
     private String title;
-    private LocalDate dateAddedToLibrary;
+    private String dateAddedToLibrary;
 }

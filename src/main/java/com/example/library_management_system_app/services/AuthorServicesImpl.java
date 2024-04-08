@@ -6,6 +6,8 @@ import com.example.library_management_system_app.dto.AuthorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class AuthorServicesImpl implements AuthorServices{
     @Autowired
@@ -18,7 +20,9 @@ public class AuthorServicesImpl implements AuthorServices{
         author.setEmail(authorRequest.getEmail());
         author.setGender(authorRequest.getGender());
         author.setNationality(authorRequest.getNationality());
-        author.setDateOfBirth(authorRequest.getDateOfBirth());
+        String dateOfBirth = authorRequest.getDateOfBirth();
+        LocalDate convertedDate = LocalDate.parse(dateOfBirth);
+        author.setDateOfBirth(convertedDate);
         author.setAutobiography(authorRequest.getAutobiography());
         author.setContactInfo(authorRequest.getContactInfo());
         authorRepository.save(author);

@@ -16,4 +16,6 @@ public interface BookServices {
     Book findBookByAuthorAndTitle(String author, String title);
 
     void deleteBookByTitle(String title);
+
+    Book borrowbook(String title);
 }
