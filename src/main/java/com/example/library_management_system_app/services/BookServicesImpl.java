@@ -7,6 +7,7 @@ import com.example.library_management_system_app.data.repository.BookRepository;
 import com.example.library_management_system_app.dto.AuthorRequest;
 import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
+import com.example.library_management_system_app.dto.utility.Response.AuthorResponse;
 import com.example.library_management_system_app.exception.BookNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,6 @@ public class BookServicesImpl implements BookServices {
         book .setAuthor(foundAuthor);
         book.setTitle(bookRequest.getTitle());
         book.setDateAddedToLibrary(bookRequest.getDateAddedToLibrary());
-        book.setId(book.getId());
         bookRepository.save(book);
         return mapBook(book);
     }

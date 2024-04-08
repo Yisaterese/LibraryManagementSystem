@@ -62,7 +62,7 @@ public class LibraryController {
         }
     }
     @PostMapping("/addBook")
-    public ResponseEntity<?>addBookToLibrary(@RequestBody BookRequest bookRequest, AuthorRequest authorRequest){
+    public ResponseEntity<?>addBookToLibrary(@RequestBody BookRequest bookRequest, @RequestBody AuthorRequest authorRequest){
          try{
              AddBookResponse response = libraryServices.addBookToLibrary(bookRequest, authorRequest);
              return new ResponseEntity<>(new ApiResponse(true, response),HttpStatus.OK);

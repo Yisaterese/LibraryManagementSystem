@@ -20,7 +20,9 @@ public class AuthorServicesImpl implements AuthorServices{
         author.setNationality(authorRequest.getNationality());
         author.setDateOfBirth(authorRequest.getDateOfBirth());
         author.setAutobiography(authorRequest.getAutobiography());
+        author.setContactInfo(authorRequest.getContactInfo());
         authorRepository.save(author);
         return author;
+       // return mapAuthorResponse(author);
     }
 }
