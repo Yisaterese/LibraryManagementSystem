@@ -1,7 +1,13 @@
 package com.example.library_management_system_app.services;
+import com.example.library_management_system_app.data.model.Author;
+import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.data.model.User;
+import com.example.library_management_system_app.dto.AuthorRequest;
+import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.RegisterRequest;
+import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
+import com.example.library_management_system_app.exception.BookNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -22,7 +28,7 @@ public class LibraryServicesImpl implements LibraryServices{
     @Override
     public int getNumberOfUsers() {return userServices.getNumberOfUsers();}
     @Override
-    public void removeUserBy(String username) {userServices.removeByUsername(username);}
+    public void deleteUserBy(String username) {userServices.removeByUsername(username);}
     @Override
     public List<User> getUsers() {return userServices.getUser();}
 
@@ -40,6 +46,29 @@ public class LibraryServicesImpl implements LibraryServices{
         return librarianServices.getNumberOfLibrarians();
     }
 
+    @Override
+    public Book findBookByAuthorAndTitle(Author author, String title) {
+        try {
+           return userServices.userFindBookByAuthorAndTitle(author, title);
+        }catch(BookNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Book findBookByAuthorAndTitle(String authorName, String bookTitle) {
+        try {
+            return userServices.userFindBookByAuthorAndTitle(authorName, bookTitle);
+        }catch(BookNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+
+    }
+    public AddBookResponse addBookToLibrary(BookRequest bookRequest, AuthorRequest authorRequest){
+        return librarianServices.addBookToLibrary(bookRequest,authorRequest);
+    }
 
 }
 

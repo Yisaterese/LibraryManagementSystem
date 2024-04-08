@@ -9,6 +9,7 @@ import com.example.library_management_system_app.data.repository.UserRepository;
 import com.example.library_management_system_app.dto.AuthorRequest;
 import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.RegisterRequest;
+import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -79,7 +80,7 @@ class LibraryServiceTest {
         libraryServicesImpl.registerUser(registerRequest);
         Assertions.assertEquals(2,libraryServicesImpl.getNumberOfUsers());
 
-        libraryServicesImpl.removeUserBy(registerRequest.getUsername());
+        libraryServicesImpl.deleteUserBy(registerRequest.getUsername());
         Assertions.assertEquals(1,libraryServicesImpl.getNumberOfUsers());
     }
     @Test
@@ -149,7 +150,6 @@ class LibraryServiceTest {
     @Test
     public void addBooksToLibrary_findItByAuthor(){
         AuthorRequest authorRequest1 = new AuthorRequest();
-        AuthorRequest authorRequest2 = new AuthorRequest();
         BookRequest bookRequest = new BookRequest();
         BookRequest bookRequest1 = new BookRequest();
         //registering author
@@ -167,31 +167,33 @@ class LibraryServiceTest {
         bookRequest.setDateAddedToLibrary(LocalDate.now());
         librarianServices.addBookToLibrary(bookRequest,authorRequest1);
         //registering second author
-        authorRequest2.setFirstname("Chinue");
-        authorRequest2.setLastname("Achebe");
-        authorRequest2.setGender("Male");
-        authorRequest2.setNationality("Nigerian");
-        authorRequest2.setAutobiography("I published my first book at very young age ");
-        authorRequest2.setContactInfo("12345-2455");
-        authorRequest2.setDateOfBirth(LocalDate.of(1934, Month.JULY,13));
-        authorRequest2.setEmail("chinueachebe@gmail.com");
+        authorRequest1.setFirstname("Chinue");
+        authorRequest1.setLastname("Achebe");
+        authorRequest1.setGender("Male");
+        authorRequest1.setNationality("Nigerian");
+        authorRequest1.setAutobiography("I published my first book at very young age ");
+        authorRequest1.setContactInfo("12345-2455");
+        authorRequest1.setDateOfBirth(LocalDate.of(1934, Month.JULY,13));
+        authorRequest1.setEmail("chinueachebe@gmail.com");
         //adding second book and author
         bookRequest.setIsbn("1234-34-1299");
         bookRequest.setTitle("Death and kings horseman");
         bookRequest.setDateAddedToLibrary(LocalDate.now());
-        librarianServices.addBookToLibrary(bookRequest1, authorRequest2);
+        librarianServices.addBookToLibrary(bookRequest1, authorRequest1);
 
         Assertions.assertEquals(2, libraryServicesImpl.getNumberOfBooks());
     }
 
     @Test
-    public void userSearchForBookByAuthorAndTitleest(){
+    public void userSearchForBookByAuthorAndTitleTest(){
         AuthorRequest authorRequest1 = new AuthorRequest();
         AuthorRequest authorRequest2 = new AuthorRequest();
-        BookRequest bookRequest = new BookRequest();
         BookRequest bookRequest1 = new BookRequest();
+        BookRequest bookRequest2 = new BookRequest();
         Author author1 = new Author();
-        Book newBook = new Book();
+        Author author2 = new Author();
+        Book newBook1 = new Book();
+        Book newBook2 = new Book();
         //registering author
         authorRequest1.setFirstname("Wole");
         authorRequest1.setLastname("Soyinka");
@@ -201,6 +203,7 @@ class LibraryServiceTest {
         authorRequest1.setContactInfo("12345-2455");
         authorRequest1.setDateOfBirth(LocalDate.of(1930, Month.NOVEMBER,16));
         authorRequest1.setEmail("wolesoyinka@gmail.com");
+        authorRequest1.setContactInfo("_wolesoyinka@Ig");
 
         author1.setLastname(authorRequest1.getLastname());
         author1.setFirstname(authorRequest1.getFirstname());
@@ -209,33 +212,42 @@ class LibraryServiceTest {
         author1.setGender(authorRequest1.getGender());
         author1.setNationality(authorRequest1.getNationality());
         author1.setEmail(authorRequest1.getEmail());
+        author1.setContactInfo(authorRequest1.getContactInfo());
         //adding book and the author
-        bookRequest.setAuthor(author1);
-        bookRequest.setIsbn("1234-34-1299");
-        bookRequest.setTitle("Things fall apart");
-        bookRequest.setDateAddedToLibrary(LocalDate.now());
-        newBook.setAuthor(bookRequest.getAuthor());
-        newBook.setTitle(bookRequest.getTitle());
-        newBook.setIsbn(bookRequest.getIsbn());
-        librarianServices.addBookToLibrary(bookRequest,authorRequest1);
+        bookRequest1.setAuthor(author1);
+        bookRequest1.setIsbn("1234-34-1299");
+        bookRequest1.setTitle("Things fall apart");
+        bookRequest1.setDateAddedToLibrary(LocalDate.now());
+        newBook1.setAuthor(bookRequest1.getAuthor());
+        newBook1.setTitle(bookRequest1.getTitle());
+        newBook1.setIsbn(bookRequest1.getIsbn());
+        newBook1.setDateAddedToLibrary(bookRequest1.getDateAddedToLibrary());
+        AddBookResponse bookResponse = librarianServices.addBookToLibrary(bookRequest1,authorRequest1);
+        Book foundBook1 = libraryServicesImpl.findBookByAuthorAndTitle(author1,bookRequest1.getTitle());
+        Assertions.assertEquals(newBook1,foundBook1);
         //registering second author
         authorRequest2.setFirstname("Chinue");
         authorRequest2.setLastname("Achebe");
-        authorRequest2.setGender("Male");
+      //  authorRequest2.setGender("Male");
         authorRequest2.setNationality("Nigerian");
         authorRequest2.setAutobiography("I published my first book at very young age ");
         authorRequest2.setContactInfo("12345-2455");
         authorRequest2.setDateOfBirth(LocalDate.of(1934, Month.JULY,13));
         authorRequest2.setEmail("chinueachebe@gmail.com");
         //adding second book and author
-        bookRequest.setIsbn("1234-34-1299");
-        bookRequest.setTitle("Death and kings horseman");
-        bookRequest.setDateAddedToLibrary(LocalDate.now());
-        librarianServices.addBookToLibrary(bookRequest1, authorRequest2);
+        bookRequest2.setAuthor(author2);
+        bookRequest2.setIsbn("1234-34-1299");
+        bookRequest2.setTitle("Death and kings horseman");
+        bookRequest2.setDateAddedToLibrary(LocalDate.now());
+        newBook2.setIsbn(bookRequest2.getIsbn());
+        newBook2.setAuthor(bookRequest2.getAuthor());
+        newBook2.setTitle(bookRequest2.getTitle());
+        newBook2.setDateAddedToLibrary(bookRequest2.getDateAddedToLibrary());
+        librarianServices.addBookToLibrary(bookRequest2, authorRequest2);
 
         Assertions.assertEquals(2, libraryServicesImpl.getNumberOfBooks());
-        Book newBook = libraryServicesImpl.findBookByAuthorAndTitle();
-        Assertions.assertEquals(newBook, libraryServicesImpl.getNumberOfBooks());
+        Book foundBook2 = libraryServicesImpl.findBookByAuthorAndTitle(author2,bookRequest2.getTitle());
+        Assertions.assertEquals(newBook2,foundBook2);
     }
 
 

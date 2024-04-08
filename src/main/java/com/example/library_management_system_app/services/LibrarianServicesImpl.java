@@ -4,6 +4,7 @@ import com.example.library_management_system_app.data.repository.LibrarianReposi
 import com.example.library_management_system_app.dto.AuthorRequest;
 import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.RegisterRequest;
+import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import com.example.library_management_system_app.exception.ExistingUserException.ExistingUserException;
 import com.example.library_management_system_app.exception.UserNotFoundException;
@@ -41,8 +42,8 @@ public class LibrarianServicesImpl implements LibrarianServices {
         librarianRepository.deleteByUsername(username);
     }
     @Override
-    public void addBookToLibrary(BookRequest bookRequest, AuthorRequest authorRequest) {
-        bookServices.addBookToLibrary(bookRequest, authorRequest);
+    public AddBookResponse addBookToLibrary(BookRequest bookRequest, AuthorRequest authorRequest) {
+       return bookServices.addBookToLibrary(bookRequest, authorRequest);
     }
     @Override
     public int getNumberOfBooks() {

@@ -1,4 +1,6 @@
 package com.example.library_management_system_app.services;
+import com.example.library_management_system_app.data.model.Author;
+import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.data.model.User;
 import com.example.library_management_system_app.data.repository.UserRepository;
 import com.example.library_management_system_app.dto.RegisterRequest;
@@ -13,6 +15,8 @@ import static com.example.library_management_system_app.dto.utility.Mapper.mapRe
 public class UserServicesImpl implements UserServices {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    BookServices bookServicesImpl;
     @Override
     public int getNumberOfUsers() {
        return  userRepository.findAll().size();
@@ -45,5 +49,14 @@ public class UserServicesImpl implements UserServices {
             return mapRegisterUser(newUser);
         }
         throw new ExistingUserException("username taken");
+    }
+
+    @Override
+    public Book userFindBookByAuthorAndTitle(Author author, String title) {
+        return bookServicesImpl.findBookByAuthorAndTitle(author,title);
+    }
+    @Override
+    public Book userFindBookByAuthorAndTitle(String author, String title) {
+        return bookServicesImpl.findBookByAuthorAndTitle(author,title);
     }
 }

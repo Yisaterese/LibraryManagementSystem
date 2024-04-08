@@ -7,8 +7,12 @@ import com.example.library_management_system_app.data.repository.BookRepository;
 import com.example.library_management_system_app.dto.AuthorRequest;
 import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
+import com.example.library_management_system_app.exception.BookNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 import static com.example.library_management_system_app.dto.utility.Mapper.mapBook;
 @Service
 public class BookServicesImpl implements BookServices {
@@ -32,5 +36,29 @@ public class BookServicesImpl implements BookServices {
     @Override
     public int getNumberOfBooks() {
         return bookRepository.findAll().size();
+    }
+
+    @Override
+    public Book findBookByAuthorAndTitle(Author author, String title) {
+        List<Book> foundBooks = bookRepository.findAll();
+        System.out.println(foundBooks);
+        for(Book book: foundBooks){
+
+
+            if(book.getAuthor().equals(author) && book.getTitle().equalsIgnoreCase(title)){return book;}
+        }
+        throw new BookNotFoundException("book with author's name "+author+"and title "+title+"not found");
+    }
+    @Override
+    public Book findBookByAuthorAndTitle(String  authorName, String title) {
+        List<Book> foundBooks = bookRepository.findAll();
+        for(Book book: foundBooks){
+            if(book.getAuthor().getFirstname().equalsIgnoreCase(authorName)
+                    && book.getAuthor().getLastname().equalsIgnoreCase(authorName)
+                    && book.getTitle().equalsIgnoreCase(title)){
+                return book;
+            }
+        }
+        throw new BookNotFoundException("book with author's name "+authorName+"and title "+title+"not found");
     }
 }
