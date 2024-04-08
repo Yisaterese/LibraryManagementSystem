@@ -129,7 +129,6 @@ class LibraryServiceTest {
         registerRequest.setEmail("librarian@gmail.com");
         librarianServices.registerLibrarian(registerRequest);
 
-
         authorRequest.setFirstname("Chinue");
         authorRequest.setLastname("Achebe");
         authorRequest.setGender("Male");
@@ -248,6 +247,34 @@ class LibraryServiceTest {
         Assertions.assertEquals(2, libraryServicesImpl.getNumberOfBooks());
         Book foundBook2 = libraryServicesImpl.findBookByAuthorAndTitle(author2,bookRequest2.getTitle());
         Assertions.assertEquals(newBook2,foundBook2);
+    }
+    @Test
+    public void librarianDeleteBookTitleTest(){
+        AuthorRequest authorRequest = new AuthorRequest();
+        RegisterRequest registerRequest = new RegisterRequest();
+        registerRequest.setUsername("librarian");
+        registerRequest.setPassword("password");
+        registerRequest.setEmail("librarian@gmail.com");
+        librarianServices.registerLibrarian(registerRequest);
+
+        authorRequest.setFirstname("Chinue");
+        authorRequest.setLastname("Achebe");
+        authorRequest.setGender("Male");
+        authorRequest.setNationality("Nigerian");
+        authorRequest.setAutobiography("I published my first book at very young age ");
+        authorRequest.setContactInfo("12345-2455");
+        authorRequest.setDateOfBirth(LocalDate.of(1965, Month.JANUARY,5));
+        authorRequest.setEmail("chinueachebe@gmail.com");
+
+        BookRequest bookRequest = new BookRequest();
+        bookRequest.setIsbn("1234-34-1299");
+        bookRequest.setTitle("Things fall apart");
+        bookRequest.setDateAddedToLibrary(LocalDate.now());
+
+        librarianServices.addBookToLibrary(bookRequest,authorRequest);
+        Assertions.assertEquals(1,libraryServicesImpl.getNumberOfBooks());
+        librarianServices.deleteBookByTitle(bookRequest.getTitle());
+        Assertions.assertEquals(0,libraryServicesImpl.getNumberOfBooks());
     }
 
 

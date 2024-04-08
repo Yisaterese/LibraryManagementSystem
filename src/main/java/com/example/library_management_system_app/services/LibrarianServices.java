@@ -17,4 +17,6 @@ public interface LibrarianServices {
    AddBookResponse addBookToLibrary(BookRequest bookRequest, AuthorRequest authorRequest);
 
     int getNumberOfBooks();
+
+    void deleteBookByTitle(String title);
 }

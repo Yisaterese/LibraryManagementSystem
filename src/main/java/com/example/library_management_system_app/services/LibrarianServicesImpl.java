@@ -49,4 +49,9 @@ public class LibrarianServicesImpl implements LibrarianServices {
     public int getNumberOfBooks() {
         return bookServices.getNumberOfBooks();
     }
+
+    @Override
+    public void deleteBookByTitle(String title) {
+        bookServices.deleteBookByTitle(title);
+    }
 }

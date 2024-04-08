@@ -33,4 +33,5 @@ public interface LibraryServices {
     Book findBookByAuthorAndTitle(String authorName, String bookTitle);
 
     AddBookResponse addBookToLibrary(BookRequest bookRequest, AuthorRequest authorRequest);
+    void deleteBookByTitle(String title);
 }

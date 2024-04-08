@@ -61,4 +61,12 @@ public class BookServicesImpl implements BookServices {
         }
         throw new BookNotFoundException("book with author's name "+authorName+"and title "+title+"not found");
     }
+
+    @Override
+    public void deleteBookByTitle(String title) {
+        Book foundBook = bookRepository.findBookByTitle(title);
+        if(foundBook == null)throw new BookNotFoundException("book with title "+title+" not found");
+        bookRepository.delete(foundBook);
+    }
+
 }

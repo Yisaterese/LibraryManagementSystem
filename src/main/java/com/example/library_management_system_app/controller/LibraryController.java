@@ -8,6 +8,7 @@ import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.RegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.ApiResponse;
+import com.example.library_management_system_app.exception.BookNotFoundException;
 import com.example.library_management_system_app.exception.ExistingBookException;
 import com.example.library_management_system_app.exception.ExistingUserException.ExistingUserException;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
@@ -76,6 +77,16 @@ public class LibraryController {
            Book bookResponse = libraryServices.findBookByAuthorAndTitle(authorName,bookTitle);
             return new ResponseEntity<>(new ApiResponse(true,bookResponse),HttpStatus.OK);
         }catch(ExistingBookException e){
+            return new ResponseEntity<>(new ApiResponse(false,e.getMessage()),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/deleteBookBy{title}")
+    public ResponseEntity<?>deleteBookByTitle(@PathVariable String title) {
+        try{
+            libraryServices.deleteBookByTitle(title);
+            return new ResponseEntity<>(new ApiResponse(true,title+ "deleted successfully"),HttpStatus.OK);
+        }catch (BookNotFoundException e){
             return new ResponseEntity<>(new ApiResponse(false,e.getMessage()),HttpStatus.BAD_REQUEST);
         }
     }

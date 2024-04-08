@@ -8,6 +8,7 @@ import com.example.library_management_system_app.dto.RegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import com.example.library_management_system_app.exception.BookNotFoundException;
+import com.example.library_management_system_app.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -69,6 +70,17 @@ public class LibraryServicesImpl implements LibraryServices{
     public AddBookResponse addBookToLibrary(BookRequest bookRequest, AuthorRequest authorRequest){
         return librarianServices.addBookToLibrary(bookRequest,authorRequest);
     }
+
+    @Override
+    public void deleteBookByTitle(String title) {
+        try {
+            librarianServices.deleteBookByTitle(title);
+        }catch (BookNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 
 }
 
