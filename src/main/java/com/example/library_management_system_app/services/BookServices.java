@@ -17,5 +17,7 @@ public interface BookServices {
 
     void deleteBookByTitle(String title);
 
-    Book borrowbook(String title);
+    Book borrowBook(String title, String username);
+
+    Book findBookByTitle(String lowerCase);
 }

@@ -18,5 +18,9 @@ public interface UserServices {
     Book userFindBookByAuthorAndTitle(Author author, String title);
     Book userFindBookByAuthorAndTitle(String author, String title);
 
-    Book borrowBook(String title);
+    Book borrowBook(String title, String username);
+
+    User findUserByUsername(String username);
+
+    void returnBookBorrowed(String title);
 }

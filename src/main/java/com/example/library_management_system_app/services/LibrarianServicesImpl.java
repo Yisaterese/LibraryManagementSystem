@@ -1,5 +1,6 @@
 package com.example.library_management_system_app.services;
 import com.example.library_management_system_app.data.model.Librarian;
+import com.example.library_management_system_app.data.model.User;
 import com.example.library_management_system_app.data.repository.LibrarianRepository;
 import com.example.library_management_system_app.dto.AuthorRequest;
 import com.example.library_management_system_app.dto.BookRequest;
@@ -18,6 +19,8 @@ public class LibrarianServicesImpl implements LibrarianServices {
     private BookServices bookServices;
     @Autowired
     private  LibrarianRepository librarianRepository;
+    @Autowired
+    private UserServices userServicesImpl;
     @Override
     public RegisterResponse registerLibrarian(RegisterRequest registerRequest) {
         Librarian isExistingLibrarian = librarianRepository.findByUsername(registerRequest.getUsername());
@@ -53,5 +56,12 @@ public class LibrarianServicesImpl implements LibrarianServices {
     @Override
     public void deleteBookByTitle(String title) {
         bookServices.deleteBookByTitle(title);
+    }
+
+    @Override
+    public void recordBookBorrower(String userName) {
+        User isExistingUser = userServicesImpl.findUserByUsername(userName.toLowerCase()    );
+        if(isExistingUser == null)throw new UserNotFoundException("'user not found");
+        userServicesImpl.save(isExistingUser);
     }
 }

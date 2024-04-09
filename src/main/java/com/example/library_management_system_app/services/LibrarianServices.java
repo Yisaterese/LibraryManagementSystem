@@ -19,4 +19,6 @@ public interface LibrarianServices {
     int getNumberOfBooks();
 
     void deleteBookByTitle(String title);
+
+    void recordBookBorrower(String userName);
 }

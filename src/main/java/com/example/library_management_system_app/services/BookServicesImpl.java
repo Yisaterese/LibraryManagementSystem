@@ -2,6 +2,7 @@ package com.example.library_management_system_app.services;
 
 import com.example.library_management_system_app.data.model.Author;
 import com.example.library_management_system_app.data.model.Book;
+import com.example.library_management_system_app.data.model.User;
 import com.example.library_management_system_app.data.repository.AuthorRepository;
 import com.example.library_management_system_app.data.repository.BookRepository;
 import com.example.library_management_system_app.dto.AuthorRequest;
@@ -21,9 +22,11 @@ public class BookServicesImpl implements BookServices {
     @Autowired
     private BookRepository bookRepository;
     @Autowired
-    private AuthorRepository authorRepository;
+    private  LibrarianServices librarianServices;
     @Autowired
     private AuthorServices authorServices;
+    @Autowired
+    private UserServices userServicesImpl;
     @Override
     public AddBookResponse addBookToLibrary(BookRequest bookRequest, AuthorRequest authorRequest) {
         Author foundAuthor = authorServices.registerAuthor(authorRequest);
@@ -70,7 +73,18 @@ public class BookServicesImpl implements BookServices {
     }
 
     @Override
-    public Book borrowbook(String title) {
+    public Book borrowBook(String title, String username) {
+        Book foundBook = bookRepository.findBookByTitle(title.toLowerCase());
+        if(foundBook == null)throw new BookNotFoundException("book with title "+title+" not found");
+        foundBook.setBorrowed(true);
+        User foundUser = userServicesImpl.findUserByUsername(username.toLowerCase());
+        foundUser.setHasBorrowed(true);
+        librarianServices.recordBookBorrower(foundUser.getUserName());
+        return foundBook;
+    }
+    @Override
+    public Book findBookByTitle(String lowerCase) {
+
         return null;
     }
 }

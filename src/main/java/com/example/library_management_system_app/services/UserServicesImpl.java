@@ -61,7 +61,19 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public Book borrowBook(String title) {
-        return bookServicesImpl.borrowbook(title);
+    public Book borrowBook(String title, String username) {
+        return bookServicesImpl.borrowBook(title, username);
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+       User foundUser = userRepository.findByUserName(username.toLowerCase());
+       if(foundUser == null){throw new UserNotFoundException("user not found ");}
+       return foundUser;
+    }
+
+    @Override
+    public void returnBookBorrowed(String title) {
+        Book  foundBook = bookServicesImpl.findBookByTitle(title.toLowerCase());
     }
 }

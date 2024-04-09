@@ -279,9 +279,39 @@ class LibraryServiceTest {
         librarianServices.addBookToLibrary(bookRequest,authorRequest);
         Assertions.assertEquals(1,libraryServicesImpl.getNumberOfBooks());
 
-        Book borrowedBook = userServices.borrowBook(bookRequest.getTitle());
+        Book borrowedBook = userServices.borrowBook(bookRequest.getTitle(),registerRequest.getUsername());
         Assertions.assertTrue(   borrowedBook.isBorrowed());
+    }
+    public void userReturnBooksBorrowedTest(){
+        RegisterRequest registerRequest = new RegisterRequest();
+        AuthorRequest authorRequest = new AuthorRequest();
+        BookRequest bookRequest = new BookRequest();
 
+        registerRequest.setUsername("username1");
+        registerRequest.setPassword("password");
+        registerRequest.setEmail("username@gmail.com");
+        libraryServicesImpl.registerUser(registerRequest);
+        Assertions.assertEquals(1,libraryServicesImpl.getNumberOfUsers());
+
+        authorRequest.setFirstname("Chinue");
+        authorRequest.setLastname("Achebe");
+        authorRequest.setGender("Male");
+        authorRequest.setNationality("Nigerian");
+        authorRequest.setAutobiography("I published my first book at very young age ");
+        authorRequest.setContactInfo("12345-2455");
+        authorRequest.setDateOfBirth(String.valueOf(LocalDate.of(1965, Month.JANUARY,5)));
+        authorRequest.setEmail("chinueachebe@gmail.com");
+
+        bookRequest.setIsbn("1234-34-1299");
+        bookRequest.setTitle("Things fall apart");
+        bookRequest.setDateAddedToLibrary(String.valueOf(LocalDate.now()));
+
+        librarianServices.addBookToLibrary(bookRequest,authorRequest);
+        Assertions.assertEquals(1,libraryServicesImpl.getNumberOfBooks());
+
+        Book borrowedBook = userServices.borrowBook(bookRequest.getTitle(),registerRequest.getUsername());
+        Assertions.assertTrue(borrowedBook.isBorrowed());
+        userServices.returnBookBorrowed(borrowedBook.getTitle());
 
     }
 
