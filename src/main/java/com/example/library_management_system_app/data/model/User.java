@@ -13,5 +13,6 @@ public class User {
     private String email;
     private String password;
     private  LocalDate dateOfBirth;
-    private boolean hasBorrowed;
+    private boolean BorrowBook;
+    private LocalDate dateBorrowed;
 }

@@ -15,6 +15,8 @@ public class Book {
     private String title;
     private LocalDate dateAddedToLibrary;
     private boolean isBorrowed;
+    private LocalDate borrowedDate;
+    private LocalDate returnedDate;
 
 
 }

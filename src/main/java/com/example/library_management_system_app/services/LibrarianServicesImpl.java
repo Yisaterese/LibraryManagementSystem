@@ -7,7 +7,7 @@ import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.RegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
-import com.example.library_management_system_app.exception.ExistingUserException.ExistingUserException;
+import com.example.library_management_system_app.exception.ExistingUserException;
 import com.example.library_management_system_app.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ import static com.example.library_management_system_app.dto.utility.Mapper.mapRe
 @Service
 public class LibrarianServicesImpl implements LibrarianServices {
     @Autowired
-    private BookServices bookServices;
-    @Autowired
     private  LibrarianRepository librarianRepository;
     @Autowired
     private UserServices userServicesImpl;
+    @Autowired
+    private BookServices bookServices;
     @Override
     public RegisterResponse registerLibrarian(RegisterRequest registerRequest) {
         Librarian isExistingLibrarian = librarianRepository.findByUsername(registerRequest.getUsername());
@@ -62,6 +62,8 @@ public class LibrarianServicesImpl implements LibrarianServices {
     public void recordBookBorrower(String userName) {
         User isExistingUser = userServicesImpl.findUserByUsername(userName.toLowerCase()    );
         if(isExistingUser == null)throw new UserNotFoundException("'user not found");
+        if(isExistingUser.isBorrowBook())isExistingUser.setBorrowBook(true);
         userServicesImpl.save(isExistingUser);
     }
+
 }

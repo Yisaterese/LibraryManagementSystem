@@ -1,16 +1,14 @@
 package com.example.library_management_system_app.controller;
 
-import com.example.library_management_system_app.data.model.Author;
 import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.data.model.User;
-import com.example.library_management_system_app.dto.AuthorRequest;
-import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.RegisterRequest;
+import com.example.library_management_system_app.dto.utility.Response.AddBookApiResponse;
 import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.ApiResponse;
 import com.example.library_management_system_app.exception.BookNotFoundException;
 import com.example.library_management_system_app.exception.ExistingBookException;
-import com.example.library_management_system_app.exception.ExistingUserException.ExistingUserException;
+import com.example.library_management_system_app.exception.ExistingUserException;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import com.example.library_management_system_app.exception.UserNotFoundException;
 import com.example.library_management_system_app.services.LibraryServices;
@@ -63,9 +61,9 @@ public class LibraryController {
         }
     }
     @PostMapping("/addBook")
-    public ResponseEntity<?>addBookToLibrary(@RequestBody BookRequest bookRequest, @RequestBody AuthorRequest authorRequest){
+    public ResponseEntity<?>addBookToLibrary(@RequestBody AddBookApiResponse addBookApiResponse){
          try{
-             AddBookResponse response = libraryServices.addBookToLibrary(bookRequest, authorRequest);
+             AddBookResponse response = libraryServices.addBookToLibrary(addBookApiResponse.getBookRequest(),addBookApiResponse.getAuthorRequest());
              return new ResponseEntity<>(new ApiResponse(true, response),HttpStatus.OK);
          }catch (ExistingBookException e){
              return new ResponseEntity<>(new ApiResponse(false,e.getMessage()),HttpStatus.BAD_REQUEST);

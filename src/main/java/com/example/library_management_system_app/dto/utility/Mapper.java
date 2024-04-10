@@ -7,6 +7,7 @@ import com.example.library_management_system_app.data.model.User;
 import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.AuthorResponse;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
+import com.example.library_management_system_app.dto.utility.Response.UpdateBookResponse;
 
 public class Mapper {
     public static RegisterResponse mapRegister(Librarian librarian){
@@ -43,6 +44,19 @@ public class Mapper {
         authorResponse.setLastname(author.getLastname());
         authorResponse.setEmail(author.getEmail());
         return authorResponse;
+    }
+    public static UpdateBookResponse mapBookUpdate(Book bookStatus){
+        UpdateBookResponse updateBookResponse = new UpdateBookResponse();
+        updateBookResponse.setAuthor(bookStatus.getAuthor());
+        updateBookResponse.setTitle(bookStatus.getTitle());
+        updateBookResponse.setIsbn(bookStatus.getIsbn());
+        updateBookResponse.setDateAddedToLibrary(bookStatus.getDateAddedToLibrary());
+        updateBookResponse.setBorrowedDate(bookStatus.getBorrowedDate());
+        updateBookResponse.setReturnedDate(bookStatus.getReturnedDate());
+        updateBookResponse.setBorrowed(bookStatus.isBorrowed());
+        updateBookResponse.setId(bookStatus.getId());
+        return updateBookResponse;
+
     }
 }
 
