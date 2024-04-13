@@ -28,9 +28,9 @@ public class BookServicesImpl implements BookServices {
         Book book = new Book();
         book .setAuthor(foundAuthor);
         book.setTitle(bookRequest.getTitle());
-        String dateAddedToLibrary = bookRequest.getDateAddedToLibrary();
-        LocalDate convertedDate = LocalDate.parse(dateAddedToLibrary);
-        book.setDateAddedToLibrary(convertedDate);
+       // String dateAddedToLibrary = bookRequest.getDateAddedToLibrary();
+        //LocalDate convertedDate = LocalDate.parse(dateAddedToLibrary);
+        book.setDateAddedToLibrary(LocalDate.now());
         bookRepository.save(book);
         return mapBook(book);
     }
@@ -39,14 +39,20 @@ public class BookServicesImpl implements BookServices {
         return bookRepository.findAll().size();
     }
 
+
+
     @Override
     public Book findBookByAuthorAndTitle(Author author, String title) {
         List<Book> foundBooks = bookRepository.findAll();
+        System.out.println(foundBooks);
         for(Book book: foundBooks){
-            if(book.getAuthor().equals(author) && book.getTitle().equalsIgnoreCase(title)){return book;}
+            System.out.println(book);
+            if(book.getAuthor().equals(author) && book.getTitle().equals(title)){return book;}
+            System.out.println(book);
         }
-        throw new BookNotFoundException("book with author's name "+author+"and title "+title+"not found");
+        throw new BookNotFoundException("book with author's name "+author+" and title "+title+" not found");
     }
+
     @Override
     public Book findBookByAuthorAndTitle(String  authorName, String title) {
         List<Book> foundBooks = bookRepository.findAll();
@@ -71,7 +77,7 @@ public class BookServicesImpl implements BookServices {
         return bookRepository.findBookByTitle(title);
     }
     @Override
-    public void returnBookBorrowed(String bookTitle) {
+    public Book returnBookBorrowed(String bookTitle) {
         Book  foundBook = findBookByTitle(bookTitle);
         //System.out.println(foundBook );
         try {if (foundBook == null) throw new BookNotFoundException("The book with title " + bookTitle + " not found");
@@ -84,6 +90,7 @@ public class BookServicesImpl implements BookServices {
         updateBookStatus(foundBook);
         //System.out.println(foundBook);
 
+        return foundBook;
     }
     @Override
     public void save(Book book) {

@@ -1,4 +1,6 @@
 package com.example.library_management_system_app.services;
+import com.example.library_management_system_app.data.model.Author;
+import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.data.model.Librarian;
 import com.example.library_management_system_app.data.model.User;
 import com.example.library_management_system_app.data.repository.LibrarianRepository;
@@ -65,5 +67,15 @@ public class LibrarianServicesImpl implements LibrarianServices {
         if(isExistingUser.isBorrowBook())isExistingUser.setBorrowBook(true);
         userServicesImpl.save(isExistingUser);
     }
+
+    @Override
+    public Book findBookByAuthorAndTitle(Author author, String title) {
+        return bookServices.findBookByAuthorAndTitle(author,title);
+    }
+
+//    @Override
+//    public Book findBookByAuthorAndTitle(Author author, String title) {
+//        return bookServices.findBookByAuthorAndTitle(author,title);
+//    }
 
 }

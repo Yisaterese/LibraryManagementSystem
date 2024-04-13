@@ -4,21 +4,19 @@ import com.example.library_management_system_app.data.model.Author;
 import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.dto.AuthorRequest;
 import com.example.library_management_system_app.dto.BookRequest;
-import com.example.library_management_system_app.dto.RegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.UpdateBookResponse;
 import org.springframework.stereotype.Service;
 @Service
 public interface BookServices {
     AddBookResponse addBookToLibrary(BookRequest bookRequest, AuthorRequest authorRequest);
-
     int getNumberOfBooks();
     Book findBookByAuthorAndTitle(Author author, String title);
     Book findBookByAuthorAndTitle(String author, String title);
 
     void deleteBookByTitle(String title);
     Book findBookByTitle(String lowerCase);
-   void returnBookBorrowed(String  bookTitle);
+   Book returnBookBorrowed(String  bookTitle);
     void save(Book foundBook);
 
     UpdateBookResponse updateBookStatus(Book bookStatus);

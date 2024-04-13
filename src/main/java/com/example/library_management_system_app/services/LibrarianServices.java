@@ -1,5 +1,7 @@
 package com.example.library_management_system_app.services;
 
+import com.example.library_management_system_app.data.model.Author;
+import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.dto.AuthorRequest;
 import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.RegisterRequest;
@@ -11,14 +13,10 @@ public interface LibrarianServices {
     RegisterResponse registerLibrarian(RegisterRequest registerRequest);
 
     int getNumberOfLibrarians();
-
     void deleteByUsername(String username);
-
    AddBookResponse addBookToLibrary(BookRequest bookRequest, AuthorRequest authorRequest);
-
     int getNumberOfBooks();
-
     void deleteBookByTitle(String title);
-
     void recordBookBorrower(String userName);
+    Book findBookByAuthorAndTitle(Author author,String title);
 }

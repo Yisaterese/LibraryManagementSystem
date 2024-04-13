@@ -4,10 +4,7 @@ import com.example.library_management_system_app.data.model.Author;
 import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.data.model.Librarian;
 import com.example.library_management_system_app.data.model.User;
-import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
-import com.example.library_management_system_app.dto.utility.Response.AuthorResponse;
-import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
-import com.example.library_management_system_app.dto.utility.Response.UpdateBookResponse;
+import com.example.library_management_system_app.dto.utility.Response.*;
 
 public class Mapper {
     public static RegisterResponse mapRegister(Librarian librarian){
@@ -20,7 +17,7 @@ public class Mapper {
     public static RegisterResponse mapRegisterUser(User user){
         RegisterResponse registerResponse = new RegisterResponse();
         registerResponse.setUsername(user.getUserName());
-        registerResponse.setEmail(registerResponse.getEmail());
+        registerResponse.setEmail(user.getEmail());
         registerResponse.setId(user.getId());
         return registerResponse;
     }
@@ -56,7 +53,16 @@ public class Mapper {
         updateBookResponse.setBorrowed(bookStatus.isBorrowed());
         updateBookResponse.setId(bookStatus.getId());
         return updateBookResponse;
-
+    }
+    public static BorrowBookResponse mapBorrowBookResponse(Book book){
+        BorrowBookResponse bookResponse = new BorrowBookResponse();
+        bookResponse.setAuthor(book.getAuthor());
+        bookResponse.setTitle(book.getTitle());
+        bookResponse.setIsbn(book.getIsbn());
+        bookResponse.setId(book.getId());
+        bookResponse.setBorrowedDate(book.getBorrowedDate());
+        bookResponse.setBorrowed(true);
+        return bookResponse;
     }
 }
 

@@ -4,6 +4,7 @@ import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.data.model.User;
 import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.RegisterRequest;
+import com.example.library_management_system_app.dto.utility.Response.BorrowBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,8 @@ public interface UserServices {
 
     void recordBookBorrower(String username);
 
-    Book borrowBook(RegisterRequest registerRequest, BookRequest bookRequest);
+    BorrowBookResponse borrowBook(RegisterRequest registerRequest, BookRequest bookRequest);
 
     User findUserByUsername(String username);
-    void returnBookBorrowed(String bookTitle);
+    Book returnBookBorrowed(String bookTitle);
 }

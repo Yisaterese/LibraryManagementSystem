@@ -49,35 +49,22 @@ public class LibraryServicesImpl implements LibraryServices{
 
     @Override
     public Book findBookByAuthorAndTitle(Author author, String title) {
-        try {
            return userServices.userFindBookByAuthorAndTitle(author, title);
-        }catch(BookNotFoundException e){
-            System.out.println(e.getMessage());
-        }
-        return null;
     }
 
     @Override
     public Book findBookByAuthorAndTitle(String authorName, String bookTitle) {
-        try {
             return userServices.userFindBookByAuthorAndTitle(authorName, bookTitle);
-        }catch(BookNotFoundException e){
-            System.out.println(e.getMessage());
-        }
-        return null;
+
 
     }
     public AddBookResponse addBookToLibrary(BookRequest bookRequest, AuthorRequest authorRequest){
         return librarianServices.addBookToLibrary(bookRequest,authorRequest);
     }
-
     @Override
     public void deleteBookByTitle(String title) {
-        try {
-            librarianServices.deleteBookByTitle(title);
-        }catch (BookNotFoundException e){
-            System.out.println( e.getMessage());
-        }
+        try {librarianServices.deleteBookByTitle(title);
+        }catch (BookNotFoundException e){System.out.println( e.getMessage());}
     }
 
 
