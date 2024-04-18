@@ -10,7 +10,6 @@ public class BorrowBookResponse {
     private Author author;
     private String isbn;
     private String title;
-    private LocalDate dateAddedToLibrary;
     private boolean isBorrowed;
     private LocalDate borrowedDate;
 }

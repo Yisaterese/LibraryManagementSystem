@@ -7,8 +7,11 @@ import java.time.LocalDate;
 @Data
 public class AddBookResponse {
     private String id;
-    private Author author;
     private String isbn;
     private String title;
     private LocalDate dateAddedToLibrary;
+    private boolean isBorrowed;
+    private LocalDate borrowedDate;
+    private LocalDate returnedDate;
+    private String author;
 }

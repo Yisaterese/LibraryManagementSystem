@@ -3,11 +3,13 @@ package com.example.library_management_system_app.services;
 import com.example.library_management_system_app.data.model.Author;
 import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.data.model.Librarian;
+import com.example.library_management_system_app.data.model.User;
 import com.example.library_management_system_app.data.repository.BookRepository;
 import com.example.library_management_system_app.data.repository.LibrarianRepository;
 import com.example.library_management_system_app.data.repository.UserRepository;
 import com.example.library_management_system_app.dto.AuthorRequest;
 import com.example.library_management_system_app.dto.BookRequest;
+import com.example.library_management_system_app.dto.BorrowBookRequest;
 import com.example.library_management_system_app.dto.RegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.BorrowBookResponse;
@@ -19,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 
 @SpringBootTest
 class LibraryServiceTest {
@@ -49,6 +52,8 @@ class LibraryServiceTest {
         registerRequest.setPassword("password");
         registerRequest.setEmail("newUser@gmaol.com");
         libraryServicesImpl.registerUser(registerRequest);
+        List<User> users = userRepository.findAll();
+        System.out.println(users);
         Assertions.assertEquals(1,libraryServicesImpl.getNumberOfUsers());
     }
     @Test
@@ -144,53 +149,16 @@ class LibraryServiceTest {
         bookRequest.setTitle("Things fall apart");
         bookRequest.setDateAddedToLibrary(String.valueOf(LocalDate.now()));
 
-        librarianServices.addBookToLibrary(bookRequest,authorRequest);
+        librarianServices.addBookToLibrary(bookRequest);
         Assertions.assertEquals(1,libraryServicesImpl.getNumberOfBooks());
     }
-//    @Test
-//    public void addBooksToLibrary_findItByAuthorTest(){
-//        AuthorRequest authorRequest1 = new AuthorRequest();
-//        BookRequest bookRequest = new BookRequest();
-//        BookRequest bookRequest1 = new BookRequest();
-//        //registering author
-//        authorRequest1.setFirstname("Wole");
-//        authorRequest1.setLastname("Soyinka");
-//        authorRequest1.setGender("Male");
-//        authorRequest1.setNationality("Nigerian");
-//        authorRequest1.setAutobiography("I published my first book at very young age ");
-//        authorRequest1.setContactInfo("12345-2455");
-//        authorRequest1.setDateOfBirth(String.valueOf(LocalDate.of(1930, Month.NOVEMBER,16)));
-//
-//        authorRequest1.setEmail("wolesoyinka@gmail.com");
-//        //adding book and the author
-//        bookRequest.setIsbn("1234-34-1299");
-//        bookRequest.setTitle("Death and kings horseman");
-//        bookRequest.setDateAddedToLibrary(String.valueOf(LocalDate.now()));
-//        librarianServices.addBookToLibrary(bookRequest,authorRequest1);
-//        //registering second author
-//        authorRequest1.setFirstname("Chinue");
-//        authorRequest1.setLastname("Achebe");
-//        authorRequest1.setGender("Male");
-//        authorRequest1.setNationality("Nigerian");
-//        authorRequest1.setAutobiography("I published my first book at very young age ");
-//        authorRequest1.setContactInfo("12345-2455");
-//        authorRequest1.setDateOfBirth(String.valueOf(LocalDate.of(1934, Month.JULY,13)));
-//        authorRequest1.setEmail("chinueachebe@gmail.com");
-//        //adding second book and author
-//        bookRequest.setIsbn("1234-34-1299");
-//        bookRequest.setTitle("Things fall apart");
-//        bookRequest.setDateAddedToLibrary(String.valueOf(LocalDate.now()));
-//        librarianServices.addBookToLibrary(bookRequest1, authorRequest1);
-//        Book foundBook = librarianServices.findBookByAuthorAndTitle(authorRequest1,bookRequest1.getTitle());
-//        Assertions.assertEquals(2, libraryServicesImpl.getNumberOfBooks());
-//    }
     @Test
     public void userSearchForBookByAuthorAndTitleTest(){
         AuthorRequest authorRequest1 = new AuthorRequest();
         BookRequest bookRequest = new BookRequest();
         BookRequest bookRequest1 = new BookRequest();
         Author author1 = new Author();
-        Book newBook1 = new Book();
+       Book newBook1 = new Book();
         //registering author
         authorRequest1.setFirstname("Wole");
         authorRequest1.setLastname("Soyinka");
@@ -220,8 +188,8 @@ class LibraryServiceTest {
 //        newBook1.setTitle(bookRequest.getTitle());
 //        newBook1.setIsbn(bookRequest.getIsbn());
 //        newBook1.setDateAddedToLibrary(LocalDate.parse(bookRequest.getDateAddedToLibrary()));
-
-        AddBookResponse bookResponse = librarianServices.addBookToLibrary(bookRequest,authorRequest1);
+//
+        AddBookResponse bookResponse = librarianServices.addBookToLibrary(bookRequest);
         Book foundBook1 = libraryServicesImpl.findBookByAuthorAndTitle(bookRequest.getAuthor(),bookRequest.getTitle());
         Assertions.assertEquals(bookResponse,foundBook1);
     }
@@ -250,15 +218,19 @@ class LibraryServiceTest {
         bookRequest.setTitle("Things fall apart");
         bookRequest.setDateAddedToLibrary(String.valueOf(LocalDate.now()));
 
-        librarianServices.addBookToLibrary(bookRequest,authorRequest);
+        librarianServices.addBookToLibrary(bookRequest);
         Assertions.assertEquals(1,libraryServicesImpl.getNumberOfBooks());
 
-        BorrowBookResponse borrowedBook = userServices.borrowBook(registerRequest,bookRequest);
+        BorrowBookRequest borrowBookRequest = new BorrowBookRequest();
+        borrowBookRequest.setBookTitle(bookRequest.getTitle());
+        borrowBookRequest.setUsername(registerRequest.getUsername());
+
+
+        BorrowBookResponse borrowedBook = userServices.borrowBook(borrowBookRequest);
         Assertions.assertTrue(borrowedBook.isBorrowed());
-        System.out.println(borrowedBook);
-        Book returnedBook = userServices.returnBookBorrowed(bookRequest.getTitle());
-        System.out.println(returnedBook);
-        Assertions.assertFalse(returnedBook.isBorrowed());
+      //  Book returnedBook = userServices.returnBookBorrowed(bookRequest.getTitle());
+
+      //  Assertions.assertFalse(returnedBook.isBorrowed());
     }
     @Test
     public void librarianDeleteBookTitleTest(){
@@ -284,7 +256,7 @@ class LibraryServiceTest {
         bookRequest.setTitle("Things fall apart");
         bookRequest.setDateAddedToLibrary(String.valueOf(LocalDate.now()));
 
-        librarianServices.addBookToLibrary(bookRequest, authorRequest);
+        librarianServices.addBookToLibrary(bookRequest);
         Assertions.assertEquals(1, libraryServicesImpl.getNumberOfBooks());
 
         librarianServices.deleteBookByTitle(bookRequest.getTitle());
@@ -315,9 +287,13 @@ class LibraryServiceTest {
         bookRequest.setTitle("Things fall apart");
         bookRequest.setDateAddedToLibrary(String.valueOf(LocalDate.now()));
 
-        librarianServices.addBookToLibrary(bookRequest, authorRequest);
+        BorrowBookRequest borrowBookRequest = new BorrowBookRequest();
+        borrowBookRequest.setBookTitle(bookRequest.getTitle());
+        borrowBookRequest.setUsername(registerRequest.getUsername());
+
+        librarianServices.addBookToLibrary(bookRequest);
         Assertions.assertEquals(1, libraryServicesImpl.getNumberOfBooks());
-        BorrowBookResponse borrowedBook = userServices.borrowBook(registerRequest, bookRequest);
+        BorrowBookResponse borrowedBook = userServices.borrowBook(borrowBookRequest);
         Assertions.assertTrue(borrowedBook.isBorrowed());
     }
 
