@@ -41,6 +41,7 @@ public interface LibraryServices {
     LogoutResponse logout(LogoutRequest logoutRequest);
 
     List<Book> returnedBorrowedBooks();
+    DeleteAllBooksResponse deleteAll();
 
     ReturnBorrowedBookResponse returnBorrowedBookResponse(ReturnedBorrowedBookRequest request);
 }

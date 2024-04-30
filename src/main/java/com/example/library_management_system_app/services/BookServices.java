@@ -5,6 +5,7 @@ import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.dto.AuthorRequest;
 import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.DeleteBookRequest;
+import com.example.library_management_system_app.dto.utility.Response.DeleteAllBooksResponse;
 import com.example.library_management_system_app.dto.utility.Response.DeleteBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.UpdateBookResponse;
 import org.springframework.stereotype.Service;
@@ -27,4 +28,5 @@ public interface BookServices {
     Book findBookByTitle(String lowerCase);
     List<Book> getBorrowedBooks();
     Book findBookByIsbn(String isbn);
+    DeleteAllBooksResponse deleteAllBooks();
 }

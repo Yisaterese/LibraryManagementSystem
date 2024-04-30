@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import static com.example.library_management_system_app.dto.utility.Mapper.*;
+import static java.util.spi.ToolProvider.findFirst;
 
 @Service
 public class UserServicesImpl implements UserServices {
@@ -96,9 +99,12 @@ public class UserServicesImpl implements UserServices {
     @Override
     public ReturnBorrowedBookResponse returnBorrowedBook(ReturnedBorrowedBookRequest request) {
         Book foundBook = bookServicesImpl.findBookByIsbn(request.getIsbn());
-        User foundUser = userRepository.findByUserName(request.getBorrower());
+        User foundUser = userRepository.findAll().stream().filter(user -> user.getUserName().equalsIgnoreCase(request.getBorrowerName())).findFirst().orElse(null);
+        System.out.println(foundUser);
         if (!foundBook.isBorrowed()) throw new BookNotFoundException("This book has not been borrowed ");
-        if (!foundUser.isLogin()) throw new UserNotLoggedInException("user not logged in");
+
+       // if (!foundUser.isLogin()) throw new UserNotLoggedInException("user not logged in");
+        assert foundUser != null;
         List<Book> books = foundUser.getBookBorrowed();
         for(Book book:books){
             if(book.equals(foundBook)){
@@ -118,7 +124,7 @@ public class UserServicesImpl implements UserServices {
     }
 
     private static void validateIfUserIsLoggedOut(User isExistingUser) {
-        if(isExistingUser.isLogin())throw new AlreadyLogOutException("user Already logged out.");
+        if(!isExistingUser.isLogin())throw new AlreadyLogOutException("user Already logged out.");
     }
 
     @Override

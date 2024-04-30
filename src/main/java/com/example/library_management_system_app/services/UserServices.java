@@ -26,7 +26,6 @@ public interface UserServices {
     User findByUserName(String lowerCase);
 
     LogoutResponse logout(LogoutRequest logoutRequest);
-
     ReturnBorrowedBookResponse returnBorrowedBook(ReturnedBorrowedBookRequest request);
 
     List<Book> returnedBorrowedBooks();

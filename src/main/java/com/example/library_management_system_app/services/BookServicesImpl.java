@@ -4,6 +4,7 @@ import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.data.repository.BookRepository;
 import com.example.library_management_system_app.dto.BookRequest;
 import com.example.library_management_system_app.dto.DeleteBookRequest;
+import com.example.library_management_system_app.dto.utility.Response.DeleteAllBooksResponse;
 import com.example.library_management_system_app.dto.utility.Response.DeleteBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.UpdateBookResponse;
 import com.example.library_management_system_app.exception.BookIsNotBorrowedException;
@@ -84,6 +85,13 @@ public class BookServicesImpl implements BookServices {
     @Override
     public Book findBookByIsbn(String isbn) {
         return getBookBy(isbn);
+    }
+
+    @Override
+    public DeleteAllBooksResponse deleteAllBooks() {
+        DeleteAllBooksResponse deleteAllBooksResponse = new DeleteAllBooksResponse();
+        bookRepository.deleteAll();
+        return deleteAllBooksResponse;
     }
 
     private Book getBookBy(String isbn) {

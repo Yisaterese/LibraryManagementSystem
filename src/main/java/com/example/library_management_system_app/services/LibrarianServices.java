@@ -4,6 +4,7 @@ import com.example.library_management_system_app.data.model.Author;
 import com.example.library_management_system_app.data.model.Book;
 import com.example.library_management_system_app.dto.*;
 import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
+import com.example.library_management_system_app.dto.utility.Response.DeleteAllBooksResponse;
 import com.example.library_management_system_app.dto.utility.Response.DeleteBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public interface LibrarianServices {
     AddBookResponse addBookToLibrary(BookRequest bookRequest);
     int getNumberOfBooks();
     DeleteBookResponse deleteBookByTitle(DeleteBookRequest deleteBookRequest);
-
+    DeleteAllBooksResponse deleteAll();
     void setBorrowedBook(String userName);
     Book findBookByAuthorAndTitle(Author author, String title);
 

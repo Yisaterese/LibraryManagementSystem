@@ -21,6 +21,7 @@ public class Book {
     private boolean isBorrowed;
     private LocalDate borrowedDate;
     private LocalDate returnedDate;
+    private BookCategory bookCategory;
 
 
 

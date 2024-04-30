@@ -107,6 +107,10 @@ public Book findBookByIsbn(FindBookRequest findBookRequest){
     public ReturnBorrowedBookResponse returnBorrowedBookResponse(ReturnedBorrowedBookRequest request){
         return userServices.returnBorrowedBook(request);
     }
+    @Override
+    public DeleteAllBooksResponse deleteAll(){
+        return librarianServices.deleteAll();
+    }
 
 }
 

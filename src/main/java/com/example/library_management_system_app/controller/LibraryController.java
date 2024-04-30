@@ -145,6 +145,16 @@ public class LibraryController {
     }catch (LibraryRuntimeException e){
         return new ResponseEntity<>(new ApiResponse(false,e.getMessage()),HttpStatus.BAD_REQUEST);}
     }
+
+    @DeleteMapping("/deleteAllBooks")
+    public ResponseEntity<?>deleteAllBooks(){
+        try{
+            DeleteAllBooksResponse response = libraryServices.deleteAll();
+            return new ResponseEntity<>(new ApiResponse(true,response),HttpStatus.OK);
+        }catch (LibraryRuntimeException e){
+            return new ResponseEntity<>(new ApiResponse(false,e.getMessage()),HttpStatus.BAD_REQUEST);
+        }
+    }
 }
 
 

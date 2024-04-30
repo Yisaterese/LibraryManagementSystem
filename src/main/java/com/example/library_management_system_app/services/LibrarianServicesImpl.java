@@ -9,6 +9,7 @@ import com.example.library_management_system_app.dto.DeleteBookRequest;
 import com.example.library_management_system_app.dto.FindBookRequest;
 import com.example.library_management_system_app.dto.RegisterRequest;
 import com.example.library_management_system_app.dto.utility.Response.AddBookResponse;
+import com.example.library_management_system_app.dto.utility.Response.DeleteAllBooksResponse;
 import com.example.library_management_system_app.dto.utility.Response.DeleteBookResponse;
 import com.example.library_management_system_app.dto.utility.Response.RegisterResponse;
 import com.example.library_management_system_app.exception.ExistingUserException;
@@ -79,6 +80,11 @@ public class LibrarianServicesImpl implements LibrarianServices {
     @Override
     public DeleteBookResponse deleteBookByTitle(DeleteBookRequest deleteBookRequest) {
         return bookServices.deleteBookByTitle(deleteBookRequest);
+    }
+
+    @Override
+    public DeleteAllBooksResponse deleteAll() {
+        return bookServices.deleteAllBooks();
     }
 
     @Override

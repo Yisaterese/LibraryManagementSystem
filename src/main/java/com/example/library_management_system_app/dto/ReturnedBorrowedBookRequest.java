@@ -6,5 +6,5 @@ import lombok.Data;
 public class ReturnedBorrowedBookRequest {
     private String isbn;
     private String bookTitle;
-    private String borrower;
+    private String borrowerName;
 }
